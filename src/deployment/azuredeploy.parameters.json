@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serviceName": {
+      "value": "__AzureSearchName__"
+    },
+    "location": {
+      "value": "__ResourceGroupLocation__"
+    },
+    "sku": {
+      "value": "free"
+    },
+    "hostingMode": {
+      "value": "Default"
+    },
+    "storageAccountName": {
+      "value": "__StorageAccountName__"
+    },
+    "accountType": {
+      "value": "Standard_LRS"
+    },
+    "kind": {
+      "value": "StorageV2"
+    },
+    "accessTier": {
+      "value": "Hot"
+    },
+    "supportsHttpsTrafficOnly": {
+      "value": true
+    },
+    "storageAccountContainerNameDocumentImage": {
+      "value": "__StorageAccountContainerNameDocumentImage__"
+    },
+    "cognitiveServiceName": {
+      "value": "__CognitiveServiceName__"
+    },
+    "cognitiveServiceLocation": {
+      "value": "__ResourceGroupLocation__"
+    },
+    "cognitiveServiceApiType": {
+      "value": "CognitiveServices"
+    },
+    "cognitiveServiceSku": {
+      "value": "S0"
+    }
+  }
+}

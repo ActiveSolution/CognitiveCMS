@@ -1,0 +1,11 @@
+{
+  "name": "__AzureSearchDataSourceName__",
+  "description": "Description",
+  "type": "azureblob",
+  "credentials": {
+    "connectionString": "__StorageAccountConnectionString__"
+  },
+  "container": {
+    "name": "__StorageAccountContainerNameDocumentImage__"
+  }
+}

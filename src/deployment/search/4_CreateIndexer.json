@@ -1,0 +1,73 @@
+{
+  "name": "__AzureSearchIndexerName__",
+  "dataSourceName": "__AzureSearchDataSourceName__",
+  "targetIndexName": "__AzureSearchIndexName__",
+  "skillsetName": "__AzureSearchSkillsetName__",
+  "fieldMappings": [
+    {
+      "sourceFieldName": "metadata_storage_path",
+      "targetFieldName": "id",
+      "mappingFunction": { "name": "base64Encode" }
+    },
+    {
+      "sourceFieldName": "content",
+      "targetFieldName": "content"
+    }
+  ],
+  "outputFieldMappings": [
+    {
+      "sourceFieldName": "/document/persons",
+      "targetFieldName": "persons"
+    },
+    {
+      "sourceFieldName": "/document/locations",
+      "targetFieldName": "locations"
+    },
+    {
+      "sourceFieldName": "/document/organizations",
+      "targetFieldName": "organizations"
+    },
+    {
+      "sourceFieldName": "/document/pages/*/keyPhrases/*",
+      "targetFieldName": "keyPhrases"
+    },
+    {
+      "sourceFieldName": "/document/languageCode",
+      "targetFieldName": "languageCode"
+    },
+    {
+      "sourceFieldName": "/document/normalized_images/*/categories/*/detail/celebrities/*/name",
+      "targetFieldName": "celebrities"
+    },
+    {
+      "sourceFieldName": "/document/normalized_images/*/categories/*/detail/landmarks/*/name",
+      "targetFieldName": "landmarks"
+    },
+    {
+      "sourceFieldName": "/document/normalized_images/*/description/tags/*",
+      "targetFieldName": "tags"
+    },
+    {
+      "sourceFieldName": "/document/normalized_images/*/description/captions/*/text",
+      "targetFieldName": "captions"
+    },
+    {
+      "sourceFieldName": "/document/normalized_images/*/color/dominantColors/*",
+      "targetFieldName": "dominantColors"
+    },
+    {
+      "sourceFieldName": "/document/metadata_storage_name",
+      "targetFieldName": "metadata_storage_name",
+      "mappingFunction": null
+    }
+  ],
+  "schedule" : { "interval" : "PT1H" },
+  "parameters": {
+    "maxFailedItems": -1,
+    "maxFailedItemsPerBatch": -1,
+    "configuration": {
+      "dataToExtract": "contentAndMetadata",
+      "imageAction": "generateNormalizedImages"
+    }
+  }
+}

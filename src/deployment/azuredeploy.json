@@ -1,0 +1,107 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serviceName": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    },
+    "sku": {
+      "type": "String"
+    },
+    "hostingMode": {
+      "type": "String"
+    },
+    "storageAccountName": {
+      "type": "String"
+    },
+    "accountType": {
+      "type": "String"
+    },
+    "kind": {
+      "type": "String"
+    },
+    "accessTier": {
+      "type": "String"
+    },
+    "supportsHttpsTrafficOnly": {
+      "type": "Bool"
+    },
+    "storageAccountContainerNameDocumentImage": {
+      "type": "String"
+    },
+    "cognitiveServiceName": {
+      "type": "String"
+    },
+    "cognitiveServiceLocation": {
+      "type": "String"
+    },
+    "cognitiveServiceApiType": {
+      "type": "String"
+    },
+    "cognitiveServiceSku": {
+      "type": "String"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('accountType')]"
+      },
+      "kind": "[parameters('kind')]",
+      "name": "[parameters('storageAccountName')]",
+      "apiVersion": "2018-07-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "accessTier": "[parameters('accessTier')]",
+        "supportsHttpsTrafficOnly": "[parameters('supportsHttpsTrafficOnly')]"
+      },
+      "resources": [
+        {
+          "name": "[concat(parameters('storageAccountName'), '/', 'default/', parameters('storageAccountContainerNameDocumentImage'))]",
+          "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+          "apiVersion": "2018-07-01",
+          "dependsOn": [
+            "[parameters('storageAccountName')]"
+          ]
+        }
+      ],
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "sku": {
+        "name": "[parameters('cognitiveServiceSku')]"
+      },
+      "kind": "[parameters('cognitiveServiceApiType')]",
+      "name": "[parameters('cognitiveServiceName')]",
+      "apiVersion": "2017-04-18",
+      "location": "[parameters('cognitiveServiceLocation')]",
+      "properties": {
+        "apiProperties": {
+          "statisticsEnabled": false
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Search/searchServices",
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
+      "name": "[parameters('serviceName')]",
+      "apiVersion": "2015-08-19",
+      "location": "[parameters('location')]",
+      "properties": {
+        "replicaCount": 1,
+        "partitionCount": 1,
+        "hostingMode": "[parameters('hostingMode')]"
+      },
+      "dependsOn": [
+        "[parameters('cognitiveServiceName')]"
+      ]
+    }
+  ]
+}

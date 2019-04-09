@@ -1,0 +1,129 @@
+{
+  "description": "Extract entities, detect language and extract key-phrases",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+      "categories": [
+        "Person",
+        "Location",
+        "Organization"
+      ],
+      "defaultLanguageCode": "en",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "persons",
+          "targetName": "persons"
+        },
+        {
+          "name": "locations",
+          "targetName": "locations"
+        },
+        {
+          "name": "organizations",
+          "targetName": "organizations"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "languageCode",
+          "targetName": "languageCode"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+      "context": "/document/pages/*",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/pages/*"
+        },
+        {
+          "name": "languageCode",
+          "source": "/document/languageCode"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "keyPhrases",
+          "targetName": "keyPhrases"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
+      "description": null,
+      "context": "/document/normalized_images/*",
+      "defaultLanguageCode": "en",
+      "visualFeatures": [
+        "Tags",
+        "Faces",
+        "Categories",
+        "Adult",
+        "Description",
+        "ImageType",
+        "Color"
+      ],
+      "details": [
+        "Celebrities",
+        "Landmarks"
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "source": "/document/normalized_images/*"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "categories",
+          "targetName": "categories"
+        },
+        {
+          "name": "tags",
+          "targetName": "tags"
+        },
+        {
+          "name": "description",
+          "targetName": "description"
+        },
+        {
+          "name": "faces",
+          "targetName": "faces"
+        },
+        {
+          "name": "imageType",
+          "targetName": "imageType"
+        },
+        {
+          "name": "color",
+          "targetName": "color"
+        },
+        {
+          "name": "adult",
+          "targetName": "adult"
+        }
+      ]
+    }
+  ],
+  "cognitiveServices": {
+      "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+      "description": "",
+      "key": "__CognitiveServicesApiKey__"
+  }
+}
