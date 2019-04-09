@@ -59,3 +59,9 @@ In your Media assets you will see Tags, Caption and Dominant Colors fields popul
 Thanks to CognitiveCMS plugin, you will be able to search through your assests by these new AI generated keywords.
 
 ![](./docs/images/Screenshot_5.png)
+
+## License
+CognitiveCMS is licensed under the very permissive MIT license for you to be able to use it in commercial or non-commercial applications without many restrictions.
+
+
+
