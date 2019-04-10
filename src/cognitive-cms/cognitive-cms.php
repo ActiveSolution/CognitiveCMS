@@ -29,6 +29,8 @@ define('ASCCMS_STORAGE_ACCOUNT_CONTAINER_NAME_DOCUMENT_IMAGE', ASCCMS_ABBREVIATI
 define('ASCCMS_PAGE_SLUG_DASHBOARD_PAGE', 'cognitive-cms-dashboard-page.php');
 define('ASCCMS_PAGE_SLUG_DETAILS_PAGE', 'cognitive-cms-details-page.php');
 define('ASCCMS_PAGE_SLUG_SETTINGS_PAGE', 'cognitive-cms-settings-page.php');
+define('ASCCMS_SEARCH_INDEX_NAME', 'index-'.ASCCMS_ABBREVIATION);
+define('ASCCMS_SEARCH_INDEXER_NAME', 'indexer-'.ASCCMS_ABBREVIATION);
 
 define('ASCCMS_PAGE_NAME_SETTINGS_PAGE', 'Settings');
 
@@ -39,7 +41,6 @@ require_once ASCCMS_PLUGIN_PATH . 'helpers/storage-account-helper.php';
 require_once ASCCMS_PLUGIN_PATH . 'helpers/cognitive-cms-helper.php';
 
 require_once ASCCMS_PLUGIN_PATH . 'includes/cognitive-cms-dashboard-page.php';
-require_once ASCCMS_PLUGIN_PATH . 'includes/cognitive-cms-details-page.php';
 require_once ASCCMS_PLUGIN_PATH . 'includes/cognitive-cms-settings-page.php';
 
 require_once ASCCMS_PLUGIN_PATH . 'includes/cognitive-cms-attachment-fields.php';

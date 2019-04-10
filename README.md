@@ -44,7 +44,7 @@ Once you have included the assets you want to enrich, going back to the Cognitiv
 
 ![](./docs/images/Screenshot_7.png)
 
-After the upload is done, you will have to wait a bit for the Cognitive Search pipeline to run. You can speed up this process by manually triggering the indexer.
+After the upload is done, Cognitive Search indexer is triggered automatically. There is however a timeout of 180 seconds after each indexer run at this Azure Search tier. Indexer is also scheduled to run every 1 hour.
 
 ![](./docs/images/Screenshot_8.png)
 
@@ -59,6 +59,14 @@ In your Media assets you will see Tags, Caption and Dominant Colors fields popul
 Thanks to CognitiveCMS plugin, you will be able to search through your assests by these new AI generated keywords.
 
 ![](./docs/images/Screenshot_5.png)
+
+## Extending
+
+This repository is a great starting point to get you up and running fast with Cognitive Search. The service itself offers a lot more then it is covered in this project. You can explore different Cognitive Services Azure has to offer and see what properties would be interesting to you.
+
+### Video Indexer
+
+Another service that goes in parallel with Cognitive Search is [Video Indexer](https://vi.microsoft.com/). If you have a lot of video assets you would like to enrich in a similar way, this is the right service! It has its own api and portal, so it would require some additional development effort.
 
 ## License
 CognitiveCMS is licensed under the very permissive MIT license for you to be able to use it in commercial or non-commercial applications without many restrictions.

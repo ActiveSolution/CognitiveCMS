@@ -22,7 +22,6 @@ if (!class_exists('ASCCMS_Plugin_Settings')) {
             register_setting('asccms-settings-group', 'asccms_storage_account_key');
             register_setting('asccms-settings-group', 'asccms_azure_search_name');
             register_setting('asccms-settings-group', 'asccms_azure_search_admin_key');
-            register_setting('asccms-settings-group', 'asccms_azure_search_index_name');
         }
 
         function asccms_show_screen() {
@@ -30,7 +29,6 @@ if (!class_exists('ASCCMS_Plugin_Settings')) {
             $storage_account_key = get_option('asccms_storage_account_key');
             $azure_search_name = Azure_Search_Helper::get_azure_search_name();
             $azure_search_admin_key = Azure_Search_Helper::get_azure_search_admin_key();
-            $azure_search_index_name = Azure_Search_Helper::get_azure_search_index_name();
 
             ?>
             <div class="wrap">
@@ -95,16 +93,6 @@ if (!class_exists('ASCCMS_Plugin_Settings')) {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="asccms_azure_search_index_name">
-                                    Index Name
-                                </label>
-                            </th>
-                            <td>
-                                <input type="text" id="asccms_azure_search_index_name" name="asccms_azure_search_index_name" class="regular-text" title="Index Name" value="<?php echo isset($azure_search_index_name) ? esc_attr($azure_search_index_name) : ''; ?>"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
                                 <button type="button" id="asccms_azure_search_test_connection" class="button button-secondary" title="Test Connection">Test Connection</button>
                             </th>
                             <td>
@@ -157,8 +145,7 @@ if (!class_exists('ASCCMS_Plugin_Settings')) {
                         let data = {
                             'action': 'post_azure_search_test_connection',
                             'asccms_azure_search_name': jQuery("#asccms_azure_search_name").val(),
-                            'asccms_azure_search_admin_key': jQuery("#asccms_azure_search_admin_key").val(),
-                            'asccms_azure_search_index_name': jQuery("#asccms_azure_search_index_name").val()
+                            'asccms_azure_search_admin_key': jQuery("#asccms_azure_search_admin_key").val()
                         };
                         jQuery.post(ajaxurl, data, function (response) {
                             jQuery("#asccms_azure_search_test_connection_wrapper").html(response);
@@ -171,9 +158,8 @@ if (!class_exists('ASCCMS_Plugin_Settings')) {
         function post_azure_search_test_connection() {
             $azure_search_name = $_POST['asccms_azure_search_name'];
             $azure_search_admin_key = $_POST['asccms_azure_search_admin_key'];
-            $azure_search_index_name = $_POST['asccms_azure_search_index_name'];
 
-            if (Azure_Search_Helper::is_azure_search_connection_working($azure_search_name, $azure_search_admin_key, $azure_search_index_name)) {
+            if (Azure_Search_Helper::is_azure_search_connection_working($azure_search_name, $azure_search_admin_key)) {
                 echo '<span class="dashicons dashicons-yes"></span>';
             } else {
                 echo '<span class="dashicons dashicons-no-alt"></span>';

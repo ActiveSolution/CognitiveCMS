@@ -1,16 +1,16 @@
 Param(
-    [string] [Parameter(Mandatory=$true)] $ProjectName,
     [string] [Parameter(Mandatory=$true)] $StorageAccountContainerNameDocumentImage,
     [string] [Parameter(Mandatory=$true)] $StorageAccountConnectionString,
     [string] [Parameter(Mandatory=$true)] $AzureSearchName,
     [System.Collections.Hashtable] [Parameter(Mandatory=$true)] $CreatePipelineHeaders,
-    [string] [Parameter(Mandatory=$true)] $CognitiveServiceKey,
-    [string] [Parameter(Mandatory=$true)] $AzureSearchIndexName
+    [string] [Parameter(Mandatory=$true)] $CognitiveServiceKey
 )
 
-$azureSearchDataSourceName = "datasource-$projectName"
-$azureSearchSkillsetName = "skillset-$projectName"
-$azureSearchIndexerName = "indexer-$projectName"
+$azureSearchSuffix = "asccms"
+$azureSearchIndexName = "index-$azureSearchSuffix"
+$azureSearchDataSourceName = "datasource-$azureSearchSuffix"
+$azureSearchSkillsetName = "skillset-$azureSearchSuffix"
+$azureSearchIndexerName = "indexer-$azureSearchSuffix"
 
 # Create DataSource
 $createDataSourceJSON = (Get-Content '.\search\1_CreateDataSource.json' -Raw) `

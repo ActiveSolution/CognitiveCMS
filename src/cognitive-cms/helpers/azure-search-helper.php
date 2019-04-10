@@ -10,7 +10,7 @@ class Azure_Search_Helper {
     }
 
     public static function get_azure_search_index_name() {
-        return get_option('asccms_azure_search_index_name');
+        return ASCCMS_SEARCH_INDEX_NAME;
     }
 
     public static function get_azure_search_url($azure_search_name = null) {
@@ -34,11 +34,11 @@ class Azure_Search_Helper {
             && self::is_azure_search_connection_working(self::get_azure_search_name(), self::get_azure_search_admin_key(), self::get_azure_search_index_name());
     }
 
-    public static function is_azure_search_connection_working($azure_search_name, $azure_search_admin_key, $azure_search_index_name) {
+    public static function is_azure_search_connection_working($azure_search_name, $azure_search_admin_key) {
         try {
             $azure_search_url = self::get_azure_search_url($azure_search_name);
             $azuresearch = new BenjaminHirsch\Azure\Search\Service($azure_search_url, $azure_search_admin_key, self::get_azure_search_api_version());
-            $azure_search_index = $azuresearch->getIndex($azure_search_index_name);
+            $azure_search_index = $azuresearch->getIndex(self::get_azure_search_index_name());
 
             if (!$azure_search_index) {
                 throw new Exception("Error Processing Request", 1);
@@ -116,5 +116,20 @@ class Azure_Search_Helper {
 
     public static function get_dominant_colors_for_filename($filename) {
         return self::get_azure_search_results_value_array($filename, 'dominantColors');
+    }
+
+    public static function run_indexer() {
+        $url = self::get_azure_search_url() . '/indexers/' . ASCCMS_SEARCH_INDEXER_NAME . '/run?api-version=' . self::get_azure_search_api_version();
+
+        // use key 'http' even if you send the request to https://...
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\nContent-length: 0\r\napi-key: ".self::get_azure_search_admin_key()."\r\n",
+                'method'  => 'POST'
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        if ($result === FALSE) { /* Handle error */ }
     }
 }

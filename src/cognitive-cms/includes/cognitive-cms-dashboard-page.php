@@ -8,6 +8,7 @@ if (!class_exists('ASCCMS_Plugin_Dashboard')) {
             add_action('admin_menu', array($this, 'asccms_plugin_dashboard_page'));
             add_action('admin_footer', array($this, 'asccms_dashboard_javascript'));
             add_action('wp_ajax_asccms_post_upload', array($this, 'asccms_post_upload'));
+            add_action('wp_ajax_asccms_run_indexer', array($this, 'asccms_run_indexer'));
             add_action('wp_ajax_asccms_post_enrich', array($this, 'asccms_post_enrich'));
         }
 
@@ -109,6 +110,7 @@ if (!class_exists('ASCCMS_Plugin_Dashboard')) {
                             jQuery.post(ajaxurl, data, function (response) {
                                 $(".asccms-upload-progress").val(upload_progress++);
                                 if (upload_progress == upload_progress_max) {
+                                    jQuery.post(ajaxurl, { 'action': 'asccms_run_indexer' }, function (asccms_run_indexer_response) { });
                                     jQuery(".asccms-upload-card").hide();
                                     jQuery(".asccms-uploaded-card").show();
                                 }
@@ -175,6 +177,12 @@ if (!class_exists('ASCCMS_Plugin_Dashboard')) {
                     $blobClient->setBlobMetadata($blob_container, $filename, $metadata);
                 }
             }
+
+            wp_die();
+        }
+
+        function asccms_run_indexer() {
+            Azure_Search_Helper::run_indexer();
 
             wp_die();
         }

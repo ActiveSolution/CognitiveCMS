@@ -10,8 +10,6 @@ $azureSearchName = "ss-$projectName"
 $storageAccountName = "sa-$projectName".Replace('-', '')
 $cognitiveServicesName = "cs-$projectName"
 
-$azureSearchIndexName = "index-$projectName"
-
 $storageAccountContainerPrefix = "asccms"
 $storageAccountContainerNameDocumentImage = "$storageAccountContainerPrefix-document-image"
 
@@ -68,7 +66,7 @@ foreach ($azureSubscription in $azureSubscriptions) {
     $azureSubscriptionCounter++;
 }
 
-$subscriptionNumber = Read-Host 'Which subscription?'
+$subscriptionNumber = Read-Host 'Please choose subscription'
 
 $subscription = Select-AzSubscription -SubscriptionId $azureSubscriptions[$subscriptionNumber - 1].Id
 
@@ -99,10 +97,9 @@ $createPipelineHeaders = @{
     "Content-Type" = "application/json"
 }
 
-.'.\Scripts\CreateCongnitiveSearchPipeline.ps1' -ProjectName $projectName -StorageAccountContainerNameDocumentImage $storageAccountContainerNameDocumentImage `
+.'.\Scripts\CreateCongnitiveSearchPipeline.ps1' -StorageAccountContainerNameDocumentImage $storageAccountContainerNameDocumentImage `
                                                 -StorageAccountConnectionString $storageAccountConnectionString -AzureSearchName $azureSearchName `
-                                                -CreatePipelineHeaders $createPipelineHeaders -CognitiveServiceKey $cognitiveServiceKeys.Key1 `
-                                                -AzureSearchIndexName $azureSearchIndexName
+                                                -CreatePipelineHeaders $createPipelineHeaders -CognitiveServiceKey $cognitiveServiceKeys.Key1
 
 # Output
 Write-Host "Storage Account Name: $storageAccountName"
@@ -110,4 +107,3 @@ Write-Host "Storage Account Access Key1: $($storageAccountKeys[0].Value)"
 
 Write-Host "Azure Search Service Name: $azureSearchName"
 Write-Host "Azure Search Admin Key: $($azureSearchAdminKeyPairs.Primary)"
-Write-Host "Azure Search Index Name: $azureSearchIndexName"
