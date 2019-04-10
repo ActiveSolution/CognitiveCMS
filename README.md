@@ -46,8 +46,6 @@ Once you have included the assets you want to enrich, going back to the Cognitiv
 
 After the upload is done, Cognitive Search indexer is triggered automatically. There is however a timeout of 180 seconds after each indexer run at this Azure Search tier. Indexer is also scheduled to run every 1 hour.
 
-![](./docs/images/Screenshot_8.png)
-
 CognitiveCMS Dashboard will now offer you to save the enriched data back to WordPress.
 
 ![](./docs/images/Screenshot_9.png)
